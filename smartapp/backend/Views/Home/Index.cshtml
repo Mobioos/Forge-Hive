@@ -1,0 +1,17 @@
+@inject SignInManager<ApplicationUser> SignInManager
+@using Hive.Backend.Security
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    if (ViewData["ModelErrors"] != null)
+    {
+        List<string> errors = new List<string>();
+        errors = (List<string>)ViewData["ModelErrors"];
+    }
+}
+<div class="jumbotron">
+        <h1>Mobioos Forge-variant Backend</h1>
+</div>
+
+

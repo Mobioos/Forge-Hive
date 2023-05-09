@@ -1,0 +1,57 @@
+<ion-content class="app" has-bouncing="false">
+  <div class="header header-big has-main-color-bg with-triangle">
+    <div class="header-left">
+      <div class="view_title">{{ "flow.flowConcernTitle" | translate }}</div>
+    </div>
+  </div>
+
+  <!--  is-list class to remove in Cards display -->
+  <div class="flow-container is-list">
+    <!-- No cards -->
+    
+    <ng-container *ngIf="cards == null || cards == undefined || cards.length == 0; else fullCards">
+      <div class="card">
+        <div class="picture" style="background-image: url('assets/imgs/create_idea.jpg')"></div>
+    
+        <div class="content-box">
+          <div class="title">
+            {{ "flow.noCard" | translate }}
+          </div>
+        </div>
+        <div class="footer">
+          <div class="button">
+            <a routerLink="/tabs/posts/newPost">
+              {{ "flow.createPost" | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #fullCards>
+
+      <!-- LIST display -->
+      <ng-container>
+        <ul class="flow_list">
+          <li *ngFor="let card of cards">
+            <ng-container [ngSwitch]="card?.type">
+              <!-- if the card is an Idea -->
+              <ng-container *ngSwitchCase="'Mood'"><app-mood-card [card]="card" (answered)="onCardListAnswered(card.id, userProfileId)"></app-mood-card></ng-container>
+              <!-- if the card is an Idea -->
+              <ng-container *ngSwitchCase="'Idea'"><app-idea-card [card]="card" (answered)="onCardListAnswered(card.id, userProfileId)"></app-idea-card></ng-container>
+              <!-- if the card is a Question -->
+              <ng-container *ngSwitchCase="'Question'"><app-question-card [card]="card" (answered)="onCardListAnswered(card.id, userProfileId)"></app-question-card></ng-container>
+              <!-- if the card is a Event -->
+              <ng-container *ngSwitchCase="'Event'"><app-event-card [card]="card" (answered)="onCardListAnswered(card.id, userProfileId)"></app-event-card></ng-container>
+
+              <!-- if the card is a Reporting -->
+              <ng-container *ngSwitchCase="'Reporting'"><app-reporting-card [card]="card"></app-reporting-card></ng-container>
+            </ng-container>
+          </li>
+        </ul>
+      </ng-container>
+    </ng-template>
+
+  </div>
+</ion-content>
+
